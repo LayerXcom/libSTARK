@@ -1,16 +1,19 @@
-include ../../flags.mk
+include ../flags.mk
 
-INCFLAGS=-Isrc -I$(GADGET3INC) -I$(LIBSTARKINC) -I$(ALGEBRAINC) -I$(FFTINC)
+WHICH				:= $(shell which which)
+MKDIR				:= $(shell $(WHICH) mkdir)
+DIRNAME				:= $(shell $(WHICH) dirname)
+
+INCFLAGS=-I. -I$(LIBSTARKINC) -I$(ALGEBRAINC) -I$(FFTINC)
 LIBS=						\
-	gadgetlib				\
 	stark					\
 	algebralib				\
 	FFT
 
 LIBFLAGS=$(addprefix -l, $(LIBS))
-LNKFLAGS=-L"$(ALGEBRALNKDIR)" -L"$(FFTLIBLNKDIR)" -L"$(GADGET3LNKDIR)" -L"$(LIBSTARKLINKDIR)" -lgomp
+LNKFLAGS=-L"$(ALGEBRALNKDIR)" -L"$(FFTLIBLNKDIR)" -L"$(LIBSTARKLINKDIR)" -lgomp
 
-SRCDIR  = src
+SRCDIR  = .
 SRCEXT  = cpp
 OBJDIR  = $(BLDDIR)/obj
 
@@ -18,8 +21,8 @@ SRCS    := $(shell find $(SRCDIR) -name '*.$(SRCEXT)')
 SRCDIRS := $(shell find . -name '*.$(SRCEXT)' -exec dirname {} \; | uniq)
 OBJS    := $(patsubst %.$(SRCEXT),$(OBJDIR)/%.o,$(SRCS))
 
-TARGET=$(BLDDIR)/stark-tinyram
-DST=$(EXEDIR)/stark-tinyram
+TARGET=$(BLDDIR)/simple-add
+DST=$(EXEDIR)/simple-add
 all: $(TARGET)
 
 $(TARGET): buildrepo $(OBJS)

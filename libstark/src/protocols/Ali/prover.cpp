@@ -6,7 +6,7 @@
 #include "reductions/BairToAcsp/BairToAcsp.hpp"
 
 #include <set>
-#if __GNUG__
+#if defined(__GNUG__) && !defined(__APPLE__)
 #include <sys/sysinfo.h>
 #endif
 
@@ -165,7 +165,7 @@ namespace{
                 unsigned short logVM;
                 //compute RAM amount on current machine
                 {
-#if __GNUG__
+#if defined(__GNUG__) && !defined(__APPLE__)
                     struct sysinfo info;
                     sysinfo(&info);
                     logRAM = std::floor(Log2(info.totalram));
@@ -585,7 +585,7 @@ namespace{
             unsigned short logRAM;
             //compute RAM amount on current machine
             {
-#if __GNUG__
+#if defined(__GNUG__) && !defined(__APPLE__)
                 struct sysinfo info;
                 sysinfo(&info);
                 logRAM = Log2(std::round(info.totalram));

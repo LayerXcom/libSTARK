@@ -1,0 +1,6 @@
+bin/
+stark-dpm
+stark-tinyram
+simple-add
+.vscode
+.pytest_cache

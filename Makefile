@@ -14,6 +14,7 @@ LIBSTARK_DIR			:= $(WD)/libstark
 GADGETLIB3_DIR			:= $(WD)/$(GADGETLIB3_SRC_DIR)
 TINYRAM_DIR				:= $(WD)/tinyram/stark-tinyram
 DPM_DIR					:= $(WD)/starkdpm
+ADD_DIR					:= $(WD)/simpleadd
 FFTLIB_DIR				:= $(WD)/algebra/FFT
 
 ALGEBRALIB_TESTS_DIR	:= $(WD)/algebra/algebralib-tests
@@ -23,6 +24,7 @@ TINYRAM_TESTS_DIR		:= $(WD)/tinyram/stark-tinyram-tests
 .PHONY: \
 		libstark libstark-clean \
 		stark-dpm stark-dpm-clean \
+		simple-add simple-add-clean \
 		stark-tinyram stark-tinyram-clean \
 		fft fft-clean \
 		algebralib algebralib-clean \
@@ -32,7 +34,7 @@ TINYRAM_TESTS_DIR		:= $(WD)/tinyram/stark-tinyram-tests
 		stark-tinyram-tests stark-tinyram-tests-clean\
 		clean
 
-default: stark-dpm stark-tinyram
+default: stark-dpm simple-add stark-tinyram
 
 tests: libstark-tests algebralib-tests stark-tinyram-tests
 
@@ -59,6 +61,22 @@ stark-dpm: fft algebralib libstark
 stark-dpm-clean:
 	$(MAKE) clean -C $(DPM_DIR) \
 		BLDDIR=$(BLDDIR)/starkdpm \
+		EXEDIR=$(EXE_DIR)
+
+simple-add: fft algebralib libstark
+	$(MAKE) -C $(ADD_DIR) \
+		BLDDIR=$(BLDDIR)/simpleadd                       \
+		EXEDIR=$(EXE_DIR) \
+		FFTINC=$(FFTLIB_DIR)/src \
+		FFTLIBLNKDIR=$(BLDDIR)/fft					\
+		ALGEBRAINC=$(ALGEBRALIB_DIR)/headers \
+		ALGEBRALNKDIR=$(BLDDIR)/algebralib \
+		LIBSTARKINC=$(LIBSTARK_DIR)/src \
+		LIBSTARKLINKDIR=$(BLDDIR)/libstark 
+
+simple-add-clean:
+	$(MAKE) clean -C $(ADD_DIR) \
+		BLDDIR=$(BLDDIR)/simpleadd \
 		EXEDIR=$(EXE_DIR)
 
 stark-tinyram: gadgetlib fft algebralib libstark

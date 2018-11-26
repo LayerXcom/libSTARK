@@ -35,5 +35,5 @@ clean:
 $(TARGET): $(OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC Linker'
-	$(CC) -o "$@" $(OBJS) -fopenmp $(LNKFLAGS) $(LIBFLAGS)
+	$(CC) -o "$@" $(OBJS) -Xpreprocessor -fopenmp $(LNKFLAGS) $(LIBFLAGS)
 	@echo 'Finished building target: $@'
