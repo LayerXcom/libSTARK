@@ -53,7 +53,7 @@ void ErrorHandling::info(const stringstream& msg) {
 }
 
 void ErrorHandling::printStacktrace() {
-#if defined(__GNUC__) && !defined(__APPLE__)
+#ifdef __GNUC__
 	cerr << "Stack trace (pipe through c++filt to demangle identifiers):" << endl;
 	const int maxFrames = 100;
 	void* frames[maxFrames];
